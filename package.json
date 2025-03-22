@@ -1,0 +1,21 @@
+{
+  "name": "zapbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch ./dist/."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "firebase": "^11.1.0",
+    "fs": "^0.0.1-security",
+    "prompt-sync": "^4.2.0",
+    "qrcode-terminal": "^0.12.0",
+    "typescript": "^5.7.2",
+    "whatsapp-web.js": "^1.26.0"
+  }
+}
