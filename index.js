@@ -4,8 +4,6 @@ const { fetchDataFromSchedulingURL } = require("./api");
 const client = new Client({ authStrategy: new LocalAuth() });
 const clients = new Map();
 
-//! Adicionar lista de usuários ativos como um sistema de variaveis separadas.
-
 const welcomeMessage1 = "Sou o assitente virtual da *Dantas Barbearia* no WhatsApp🤖";
 const welcomeMessage2 = "Antes de seguir com o seu atendimento, preciso que escolha uma das opções abaixo:\n\n";
 const options = "1 - *Agendar um horário*\n2 - *Conversar com o barbeiro*\n3 - *Instagram*";
