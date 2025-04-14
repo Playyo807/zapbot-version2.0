@@ -1,0 +1,4 @@
+2025/04/14-16:29:43.771 59c4 Reusing MANIFEST C:\Users\Usuário\Documents\zapbot2.0\zapbot-version2.0\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/04/14-16:29:43.771 59c4 Recovering log #56
+2025/04/14-16:29:43.952 59c4 Reusing old log C:\Users\Usuário\Documents\zapbot2.0\zapbot-version2.0\.wwebjs_auth\session\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000056.log 
+2025/04/14-16:29:45.913 4044 Manual compaction at level-0 from '\x00\x1f\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00 \x00\x00\x00' @ 0 : 0; will stop at (end)
