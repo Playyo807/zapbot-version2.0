@@ -78,7 +78,7 @@ client.on("ready", () => {
           })
         }
       })
-  }, 1000);
+  }, 60000);
 });
 
 client.on('message', async (message) => {
