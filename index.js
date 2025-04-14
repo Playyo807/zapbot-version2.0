@@ -23,66 +23,68 @@ client.on("ready", () => {
   console.log("Client is ready");
   let lastNumberArr = [];
   let canSendMsg = true;
-  // setInterval(() => {
-  //   fetch("https://apirepo-e1u4.onrender.com/numbersList", {
-  //     headers: { "Content-Type": "application/json" }
-  //   })
-  //     .then(res => {
-  //       if (!res.ok) throw new Error("Could not fetch form this resource");
-  //       return res.json();
-  //     })
-  //     .then(data => {
-  //       let nCheck = true;
-  //       let reqId = -1;
-  //       data.map((val, index) => {
-  //         if (lastNumberArr[index]) {
-  //           if (val.id != lastNumberArr[index].id) {
-  //             nCheck = false;
-  //             console.log("false: " + lastNumberArr[index].id + ", " + val.id);
-  //             reqId = val.reqId;
-  //           }
-  //         } else {
-  //           nCheck = false;
-  //           console.log(".");
-  //           reqId = val.reqId;
-  //         }
-  //       })
-  //       lastNumberArr = data;
-  //       console.log(nCheck);
-  //       if (nCheck == false && canSendMsg == true) {
-  //         canSendMsg = false;
-  //         const iL = ["Nome", "Sobrenome", "Telefone", "Barbeiro", "Horário", "Pedido"];
-  //         let data = fetchDataFromSchedulingURL("https://apirepo-e1u4.onrender.com", reqId);
-  //         data.then(d => {
-  //           let message = "Olá, estou para confirmar seu agendamento na Dantas Barbearia!\nAqui algumas informações importantes:\n ";
-  //           for (let i in d[0]) {
-  //             if (i < 6) {
-  //               message += `\n${iL[i]}: ${d[0][i]}`;
-  //             }
-  //           }
-  //           message += `\nDia: ${d[1]}`
-  //           let number = "55" + lastNumberArr.at(-1).number;
-  //           number += "@c.us";
-  //           client.sendMessage(number, message).then(response => {
-  //             if (response.id.fromMe) {
-  //               console.log("Mensagem enviada");
-  //             }
-  //           }).catch(err => {
-  //             console.error("Failed to send message: " + err);
-  //           })
-  //           setTimeout(() => {
-  //             canSendMsg = true;
-  //           }, 2000);
-  //         })
-  //       }
-  //     })
-  // }, 1000);
+  setInterval(async () => {
+    fetch("https://apirepo-e1u4.onrender.com/numbersList", {
+      headers: { "Content-Type": "application/json" }
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Could not fetch form this resource");
+        return res.json();
+      })
+      .then(async data => {
+        let nCheck = true;
+        let reqId = -1;
+        data.map((val, index) => {
+          if (lastNumberArr[index]) {
+            if (val.id != lastNumberArr[index].id) {
+              nCheck = false;
+              console.log("false: " + lastNumberArr[index].id + ", " + val.id);
+              reqId = val.reqId;
+            }
+          } else {
+            nCheck = false;
+            console.log(".");
+            reqId = val.reqId;
+          }
+        })
+        lastNumberArr = data;
+        console.log(nCheck);
+        if (nCheck == false && canSendMsg == true) {
+          canSendMsg = false;
+          const iL = ["Nome", "Sobrenome", "Telefone", "Barbeiro", "Horário", "Pedido"];
+          let data = fetchDataFromSchedulingURL("https://apirepo-e1u4.onrender.com", reqId);
+          data.then(async d => {
+            let message = "Olá, estou para confirmar seu agendamento na Dantas Barbearia!\nAqui algumas informações importantes:\n ";
+            for (let i in d[0]) {
+              if (i < 6) {
+                message += `\n${iL[i]}: ${d[0][i]}`;
+              }
+            }
+            message += `\nDia: ${d[1]}`;
+            message += "\n\n_Mensagem automática, não responda!_"
+            let number = "55" + lastNumberArr.at(-1).number;
+            number += "@c.us";
+            const numberID = await client.getNumberId(number);
+            client.sendMessage(numberID._serialized, message).then(response => {
+              if (response.id.fromMe) {
+                console.log("Mensagem enviada");
+              }
+            }).catch(err => {
+              console.error("Failed to send message: " + err);
+            })
+            setTimeout(() => {
+              canSendMsg = true;
+            }, 2000);
+          })
+        }
+      })
+  }, 1000);
 });
 
 client.on('message', async (message) => {
   const chat = await message.getChat();
   const contact = await message.getContact();
-  const name = contact.pushname;
+  const name = await contact.pushname || contact.name;
 
   if (!clients.has(contact.id._serialized)) {
     console.log(contact);
@@ -90,9 +92,11 @@ client.on('message', async (message) => {
     console.log("Firing exist")
   }
 
+  delay(500);
+
   console.log(clients.get(contact.id._serialized).botCanSendMsg1)
 
-  if (message.body == "!test" && clients.get(contact.id._serialized).botCanSendMsg1) {
+  if (clients.get(contact.id._serialized).botCanSendMsg1) {
     clients.set(contact.id._serialized, { botCanSendMsg1: false });
     chat.sendStateTyping();
     await delay(1000);
