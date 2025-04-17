@@ -3,7 +3,10 @@ const { generate } = pkg2;
 import pkg from 'whatsapp-web.js';
 const { Client, LocalAuth, NoAuth } = pkg;
 import fetchDataFromSchedulingURL from "./api.js";
-const client = new Client({ authStrategy: new NoAuth() });
+const client = new Client({ puppeteer:{
+  headless: true,
+  args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+}, authStrategy: new NoAuth() });
 const clients = new Map();
 
 const welcomeMessage1 = "Sou o assitente virtual da *Dantas Barbearia* no WhatsApp🤖";
