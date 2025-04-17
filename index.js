@@ -5,7 +5,7 @@ const { Client, LocalAuth, NoAuth } = pkg;
 import fetchDataFromSchedulingURL from "./api.js";
 const client = new Client({ puppeteer:{
   headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security']
+  args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security', 'granted-permissions=all', '--disable-features=IsolateOrigins,site-per-process', '--granted-permissions=all']
 }, authStrategy: new NoAuth() });
 const clients = new Map();
 
