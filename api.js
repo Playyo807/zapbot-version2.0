@@ -1,4 +1,4 @@
-async function fetchDataFromSchedulingURL(url, id = -1) {
+export default async function fetchDataFromSchedulingURL(url, id = -1) {
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const ptDays = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   let choosenDayIndex = -1;
@@ -57,5 +57,3 @@ const idVals = fetchDataFromSchedulingURL("https://apirepo-e1u4.onrender.com", "
 idVals.then((d) => {
   console.log(d);
 })
-
-module.exports = {fetchDataFromSchedulingURL};
