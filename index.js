@@ -1,6 +1,6 @@
 import { generate } from "qrcode-terminal";
 import { Client, LocalAuth, Buttons } from "whatsapp-web.js";
-import { fetchDataFromSchedulingURL } from "./api";
+import { fetchDataFromSchedulingURL } from "./api.js";
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, authStrategy: new LocalAuth() });
 const clients = new Map();
 
