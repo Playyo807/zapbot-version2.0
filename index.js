@@ -1,7 +1,7 @@
 const qrcode = require("qrcode-terminal");
 const { Client, LocalAuth, Buttons } = require("whatsapp-web.js");
 const { fetchDataFromSchedulingURL } = require("./api");
-const client = new Client({ authStrategy: new LocalAuth() });
+const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, authStrategy: new LocalAuth() });
 const clients = new Map();
 
 const welcomeMessage1 = "Sou o assitente virtual da *Dantas Barbearia* no WhatsApp🤖";
