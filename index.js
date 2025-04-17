@@ -1,7 +1,12 @@
-import { generate } from "qrcode-terminal";
-import { Client, LocalAuth, Buttons } from "whatsapp-web.js";
-import { fetchDataFromSchedulingURL } from "./api.js";
-const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, authStrategy: new LocalAuth() });
+import pkg2 from 'qrcode-terminal';
+const { generate } = pkg2;
+import pkg from 'whatsapp-web.js';
+const { Client, LocalAuth, NoAuth } = pkg;
+import fetchDataFromSchedulingURL from "./api.js";
+const client = new Client({ authStrategy: new LocalAuth({
+  clientId: "client-one",
+  dataPath: "./src/auth",
+}) });
 const clients = new Map();
 
 const welcomeMessage1 = "Sou o assitente virtual da *Dantas Barbearia* no WhatsApp🤖";
@@ -16,7 +21,8 @@ const cancelationConfirm = "Pronto, essa _interação_ foi *cancelada!*"
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 client.on("qr", (qr) => {
-  generate(qr, { small: true });
+  
+  pkg2.generate(qr, { small: true });
 });
 
 client.on("ready", () => {
