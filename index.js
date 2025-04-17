@@ -1,6 +1,6 @@
-const qrcode = require("qrcode-terminal");
-const { Client, LocalAuth, Buttons } = require("whatsapp-web.js");
-const { fetchDataFromSchedulingURL } = require("./api");
+import { generate } from "qrcode-terminal";
+import { Client, LocalAuth, Buttons } from "whatsapp-web.js";
+import { fetchDataFromSchedulingURL } from "./api";
 const client = new Client({ puppeteer: { headless: true, args: ['--no-sandbox'] }, authStrategy: new LocalAuth() });
 const clients = new Map();
 
@@ -16,7 +16,7 @@ const cancelationConfirm = "Pronto, essa _interação_ foi *cancelada!*"
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 client.on("qr", (qr) => {
-  qrcode.generate(qr, { small: true });
+  generate(qr, { small: true });
 });
 
 client.on("ready", () => {
